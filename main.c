@@ -42,6 +42,7 @@
 #include "dac.h"
 #include "dma.h"
 #include "tim.h"
+#include "lcd.h"
 
 #ifdef _RTE_
 #include "RTE_Components.h"             // Component selection
@@ -89,6 +90,7 @@ uint32_t HAL_GetTick (void) {
 static void SystemClock_Config(void);
 static void Error_Handler(void);
 extern int Init_ThreadAltavoz (void);
+extern int Init_ThreadLCD(void);
 /* Private functions ---------------------------------------------------------*/
 
 
@@ -136,6 +138,10 @@ int main(void)
 	MX_DMA_Init();
 	MX_DAC_Init();
   MX_TIM2_Init();
+  
+  LCD_reset();
+  LCD_init();
+  LCD_update();
 
   printf("Se ha inicializado el DMA, DAC y TIM2");
 	conf_boton();	
@@ -147,6 +153,7 @@ int main(void)
   /* Create thread functions that start executing, 
   Example: osThreadNew(app_main, NULL, NULL); */
 	Init_ThreadAltavoz();
+  Init_ThreadLCD();
   /* Start thread execution */
   osKernelStart();
 #endif
