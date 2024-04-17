@@ -217,12 +217,12 @@ void EXTI15_10_IRQHandler(void)
 
 /* USER CODE BEGIN 1 */
 
-extern osThreadId_t tid_Thread;
+extern osThreadId_t tid_ThreadAltavoz;
 
 void HAL_GPIO_EXTI_Callback( uint16_t GPIO_Pin){ //Interrupci n del pulsador azul
 	if(GPIO_Pin==GPIO_PIN_13){
 		
-		osThreadFlagsSet(tid_Thread,0x01);
+		osThreadFlagsSet(tid_ThreadAltavoz,FLAG_THALTAVOZ);
 
 	}
 }

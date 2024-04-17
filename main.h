@@ -39,10 +39,12 @@
 
 /* Includes ------------------------------------------------------------------*/
 #include "stm32f4xx_hal.h"
+#include "stdio.h"
 
 /* Exported types ------------------------------------------------------------*/
 /* Exported constants --------------------------------------------------------*/
 /* Exported macro ------------------------------------------------------------*/
+#define FLAG_THALTAVOZ 0X00000001U
 /* Exported functions ------------------------------------------------------- */
   /* Exported thread functions,  
   Example: extern void app_main (void *arg); */

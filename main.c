@@ -39,7 +39,6 @@
 
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
-#include "math.h"
 #include "dac.h"
 #include "dma.h"
 #include "tim.h"
@@ -84,28 +83,19 @@ uint32_t HAL_GetTick (void) {
 
 /* Private typedef -----------------------------------------------------------*/
 /* Private define ------------------------------------------------------------*/
-#define LD1_Pin GPIO_PIN_0
-#define LD1_GPIO_Port GPIOB
 /* Private macro -------------------------------------------------------------*/
 /* Private variables ---------------------------------------------------------*/
 /* Private function prototypes -----------------------------------------------*/
 static void SystemClock_Config(void);
 static void Error_Handler(void);
-extern int Init_Thread (void);
+extern int Init_ThreadAltavoz (void);
 /* Private functions ---------------------------------------------------------*/
-uint32_t sine_val[100];
-#define PI 3.1415926
 
-void sinusoide(void){
-	int i;
-	for(i = 0; i < 100; i++){
-		sine_val[i]=((sin(i*2*PI/100)+1)*(4096/2));
-	}
-}
 
-GPIO_InitTypeDef GPIO_InitStruct;
+// Configuracion de boton azul
 
 void conf_boton(void){
+  GPIO_InitTypeDef GPIO_InitStruct;
 	
 	HAL_NVIC_EnableIRQ(EXTI15_10_IRQn);
 	
@@ -146,15 +136,9 @@ int main(void)
 	MX_DMA_Init();
 	MX_DAC_Init();
   MX_TIM2_Init();
-	
-//	HAL_TIM_Base_Start(&htim2);
-//  sinusoide();
-//  HAL_DAC_Start_DMA(&hdac, DAC_CHANNEL_1, sine_val, 100, DAC_ALIGN_12B_R);
-	
+
+  printf("Se ha inicializado el DMA, DAC y TIM2");
 	conf_boton();	
-	//LED_Initialize();
-	
-//	Init_Timers();
 
 #ifdef RTE_CMSIS_RTOS2
   /* Initialize CMSIS-RTOS2 */
@@ -162,7 +146,7 @@ int main(void)
 
   /* Create thread functions that start executing, 
   Example: osThreadNew(app_main, NULL, NULL); */
-	Init_Thread();
+	Init_ThreadAltavoz();
   /* Start thread execution */
   osKernelStart();
 #endif
@@ -170,9 +154,6 @@ int main(void)
   /* Infinite loop */
   while (1)
   {
-		
-		HAL_GPIO_TogglePin(LD1_GPIO_Port, LD1_Pin);
-	  HAL_Delay(500);
   }
 }
 
