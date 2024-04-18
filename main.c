@@ -43,6 +43,7 @@
 #include "dma.h"
 #include "tim.h"
 #include "lcd.h"
+#include "rtc.h"
 
 #ifdef _RTE_
 #include "RTE_Components.h"             // Component selection
@@ -138,6 +139,10 @@ int main(void)
 	MX_DMA_Init();
 	MX_DAC_Init();
   MX_TIM2_Init();
+	
+	init_RTC();
+  set_dia_hora(10,30,30,1,1,1,01);
+	set_alarm(1,0,0);
   
   LCD_reset();
   LCD_init();

@@ -45,6 +45,7 @@
 /* Exported constants --------------------------------------------------------*/
 /* Exported macro ------------------------------------------------------------*/
 #define FLAG_THALTAVOZ 0X00000001U
+#define FLAG_THLCD 0X00000002U
 /* Exported functions ------------------------------------------------------- */
   /* Exported thread functions,  
   Example: extern void app_main (void *arg); */

@@ -1,6 +1,7 @@
 #include "cmsis_os2.h"                          // CMSIS RTOS header file
 #include "lcd.h"
 #include "main.h"
+#include "rtc.h"
  
 osThreadId_t tid_ThLCD;                        // thread id
  
@@ -17,17 +18,16 @@ int Init_ThreadLCD (void) {
 }
  
 void ThreadLCDFunction (void *argument) {
-  uint8_t contador = 0;
-  char msg[30];
+
+	tiempoyfecha datos;
   
   while (1) {
     // Insert thread code here...
+		osThreadFlagsWait(FLAG_THLCD, osFlagsWaitAny, osWaitForever);
+		datos=get_tiempo_fecha();
     erase_screen();
-    sprintf(msg,"%d",contador);
-    write(1,msg);
-    write(2,"eooeoeoeo");
-    contador++;
-    osDelay(1000);
+    write(1,datos.fecha);
+    write(2,datos.tiempo);
     osThreadYield();                            // suspend thread
   }
 }
